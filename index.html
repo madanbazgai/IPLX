@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+
+    <title>IPLX</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div>
+      <h3 class="iplx">IPLX</h3>
+    </div>
+    <div class="div-links">
+      <a href="./channel-1.html">English HD</a>
+      <a href="./channel-2.html">Hindi HD</a>
+    </div>
+    <div id="container" class="container">
+      <iframe src="./live-1.html" frameborder="0"></iframe>
+    </div>
+    <p class="footer">
+      &copy; Designed & Developed by
+      <a class="underline" href="https://madanbajgai.com.np">MadanBazgai</a>
+    </p>
+
+    <script>
+      if (navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.register("./sw.js");
+      }
+
+      let logo;
+      window.addEventListener("load", function () {
+        logo = document.querySelector(".iplx");
+      });
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+
+        logo.addEventListener("click", (e) => {
+          deferredPrompt.prompt();
+          deferredPrompt.userChoice.then((choiceResult) => {
+            if (choiceResult.outcome === "accepted") {
+              console.log("User accepted the A2HS prompt");
+            } else {
+              console.log("User dismissed the A2HS prompt");
+            }
+            deferredPrompt = null;
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
