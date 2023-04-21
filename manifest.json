@@ -29,7 +29,7 @@
   "theme_color": "#000",
   "background_color": "#000",
   "start_url": "/",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "display": "standalone",
   "prefer_related_applications": true
 }
