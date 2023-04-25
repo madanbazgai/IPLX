@@ -24,6 +24,7 @@ body {
 }
 .div-links {
   display: flex;
+  flex-wrap: wrap;
   font-size: 25px;
   justify-content: center;
   gap: 2em;
