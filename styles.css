@@ -71,7 +71,16 @@ body {
   margin-bottom: 20px;
   color: white;
 }
-
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not_found {
+  color: white;
+  font-size: 10rem;
+  font-weight: bold;
+}
 iframe {
   border-radius: 10px;
   position: absolute;
