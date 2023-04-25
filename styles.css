@@ -59,6 +59,7 @@ body {
   overflow: hidden;
   padding-top: 70%;
   border-radius: 10px; /* 16:9 Aspect Ratio */
+  margin-bottom: 140px;
 }
 
 .footer {
