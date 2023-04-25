@@ -9,7 +9,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   font-family: nothing;
   background-color: rgb(39, 39, 39);
 }
@@ -67,6 +67,7 @@ body {
 }
 
 .footer a {
+  margin-bottom: 20px;
   color: white;
 }
 
