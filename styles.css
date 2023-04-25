@@ -6,8 +6,10 @@
 }
 
 body {
+  height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   font-family: nothing;
   background-color: rgb(39, 39, 39);
 }
