@@ -26,6 +26,7 @@ body {
   cursor: pointer;
   text-decoration: none;
 }
+
 .div-links {
   display: flex;
   flex-wrap: wrap;
@@ -93,6 +94,25 @@ iframe {
   height: 70%;
   border: none;
 }
+
+.neon, .not_found {
+  animation: glowing 5000ms infinite;
+}
+
+@keyframes glowing {
+  0% {
+    color: #00ff0d;
+  }
+  50% {
+    text-shadow: 0 0 10px #23cf00, 0 0 10px #1fac03, 0 0 10px #23d300,
+      0 0 10px #23d400, 0 0 10px #22cc00, 0 0 10px #1fbb00, 0 0 10px #1eb400;
+    color: #ffffff;
+  }
+  100% {
+    color: #00ff0d;
+  }
+}
+
 @media screen and (min-width: 390px) and (orientation: landscape) {
   .container {
     width: 50%;
