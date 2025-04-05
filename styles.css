@@ -6,9 +6,6 @@
 }
 
 body {
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
   font-family: nothing;
   background-color: rgb(39, 39, 39);
   overflow: hidden; /* Hide scrollbars */
@@ -20,24 +17,23 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
-
-.iplx {
-  display: block;
-  color: white;
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 90%;
   margin: 0 auto;
+}
+.iplx {
+  color: white;
   font-size: 30px;
-  padding-bottom: 10px;
-  margin-bottom: 30px;
-  border-bottom: 1px solid rgb(80, 80, 80);
   cursor: pointer;
   text-decoration: none;
 }
 
 .div-links {
   display: flex;
-  flex-wrap: wrap;
-  font-size: 25px;
+  font-size: 20px;
   justify-content: center;
   gap: 2em;
 }
@@ -58,6 +54,24 @@ body::-webkit-scrollbar {
   text-decoration: none;
   color: rgb(248, 248, 248);
   font-weight: 500;
+}
+
+.install-btn {
+  background-color: rgb(24, 153, 24);
+  color: white;
+  padding: 5px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: nothing;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.info-text {
+  border: 1px solid red;
 }
 
 .container {
@@ -93,7 +107,7 @@ body::-webkit-scrollbar {
 .player-container {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,24 +124,22 @@ body::-webkit-scrollbar {
 .video-frame {
   position: absolute;
   width: 90%;
-  height: 80%;
   border: none;
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 255, 13, 0.5);
   overflow: hidden; /* Ensure content doesn't show scrollbars */
-  max-width: 1400px; /* Prevent excessive width on large screens */
 }
 
 iframe {
   border-radius: 10px;
   position: absolute;
-  top: 30px;
+  top: 20px;
   left: 50%;
   transform: translate(-50%);
   bottom: 0;
   right: 0;
-  width: 90%;
-  height: 95%;
+  width: 100%;
+  height: 87%;
   border: none;
 }
 
@@ -150,67 +162,56 @@ iframe {
   }
 }
 
-@media screen and (min-width: 390px) and (orientation: landscape) {
-  .container {
-    width: 50%;
-    padding-top: 35%;
-  }
+@media screen and (max-width: 1377px) {
   iframe {
-    width: 100%;
-  }
-  .video-frame {
-    width: 95%;
-    height: 90%;
-  }
-}
-@media screen and (min-width: 720px) and (orientation: landscape) {
-  .container {
-    width: 90%;
-    padding-top: 50%;
-  }
-  iframe {
-    width: 100%;
-  }
-  .video-frame {
-    width: 95%;
-    height: 85%;
-  }
-}
-
-/* Additional responsive breakpoints */
-@media screen and (min-width: 1024px) {
-  .video-frame {
-    width: 90%;
     height: 80%;
   }
+}
 
-  .player-container {
-    padding: 20px 0;
+@media screen and (max-width: 768px) {
+  .iplx {
+    font-size: 25px;
+  }
+  .div-links {
+    font-size: 15px;
+  }
+  .div-links a {
+    padding: 2px 5px;
+  }
+  .install-btn {
+    font-size: 15px;
+    padding: 5px 10px;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .video-frame {
-    width: 95%;
-    height: 70%;
+  .iplx {
+    font-size: 20px;
   }
-
-  .player-container {
-    height: 90vh;
+  .div-links {
+    font-size: 12px;
   }
-}
-
-/* Handle different aspect ratios */
-@media screen and (max-aspect-ratio: 1/1) {
-  .video-frame {
-    width: 95%;
-    height: 60%;
+  .div-links a {
+    padding: 2px 5px;
+  }
+  .install-btn {
+    font-size: 12px;
+    padding: 5px 10px;
   }
 }
-
-@media screen and (min-aspect-ratio: 16/9) {
-  .video-frame {
-    height: 80%;
-    max-height: 80vh;
+@media screen and (max-width: 360px) {
+  .iplx {
+    font-size: 15px;
+  }
+  .div-links {
+    font-size: 10px;
+    gap: 5px;
+  }
+  .div-links a {
+    padding: 2px 5px;
+  }
+  .install-btn {
+    font-size: 10px;
+    padding: 5px 10px;
   }
 }
