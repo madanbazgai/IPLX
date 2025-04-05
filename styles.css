@@ -24,7 +24,8 @@ body::-webkit-scrollbar {
   width: 90%;
   margin: 0 auto;
   border-bottom: 1px solid #3d3d3d;
-  padding-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .iplx {
   color: white;
@@ -202,6 +203,14 @@ iframe {
   .info {
     display: none;
   }
+
+  .player-container {
+    height: 80vh;
+  }
+
+  iframe {
+    height: 100%;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -220,7 +229,7 @@ iframe {
   }
   .footer {
     font-size: 12px;
-    top: 50%;
+    top: 90%;
   }
 }
 @media screen and (max-width: 360px) {
