@@ -23,6 +23,8 @@ body::-webkit-scrollbar {
   align-items: center;
   width: 90%;
   margin: 0 auto;
+  border-bottom: 1px solid #3d3d3d;
+  padding-bottom: 10px;
 }
 .iplx {
   color: white;
@@ -70,8 +72,17 @@ body::-webkit-scrollbar {
   transition: all 0.3s ease;
 }
 
-.info-text {
-  border: 1px solid red;
+.info {
+  z-index: 100;
+  position: absolute;
+  top: 11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: #afafaf;
+  font-weight: 100;
+  width: 100%;
+  text-align: center;
 }
 
 .container {
@@ -81,12 +92,15 @@ body::-webkit-scrollbar {
   overflow: hidden;
   padding-top: 70%;
   border-radius: 10px; /* 16:9 Aspect Ratio */
-  margin-bottom: 140px;
 }
 
 .footer {
   text-align: center;
   color: white;
+  position: absolute;
+  top: 95%;
+  width: 100%;
+  font-size: 15px;
 }
 
 .footer a {
@@ -166,6 +180,9 @@ iframe {
   iframe {
     height: 80%;
   }
+  .footer {
+    top: 88%;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -182,6 +199,9 @@ iframe {
     font-size: 15px;
     padding: 5px 10px;
   }
+  .info {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -197,6 +217,10 @@ iframe {
   .install-btn {
     font-size: 12px;
     padding: 5px 10px;
+  }
+  .footer {
+    font-size: 12px;
+    top: 50%;
   }
 }
 @media screen and (max-width: 360px) {
