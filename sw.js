@@ -1,36 +1,59 @@
+const CACHE_NAME = "iplx-v2"; const OFFLINE_URL = "/404.html";
+const ASSETS = [
+  "/",
+  "/styles.css",
+  "/manifest.json",
+  "/favicon.ico",
+  "/icons/icon-192x192.png",
+  "/icons/icon-256x256.png",
+  "/icons/icon-384x384.png",
+  "/icons/icon-512x512.png",
+  OFFLINE_URL,
+];
 
-importScripts('https://storage.googleapis.com/workbox-cdn/releases/6.1.1/workbox-sw.js');
+self.addEventListener("install", (event) => {
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS)));
+  self.skipWaiting();
+});
 
-const { StaleWhileRevalidate } = workbox.strategies;
-const { precacheAndRoute } = workbox.precaching;
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key)))
+    )
+  );
+  self.clients.claim();
+});
 
-precacheAndRoute([
-    { url: '/404.html', revision: null },
-]);
+self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") {
+    return;
+  }
 
-workbox.routing.registerRoute(
-    ({ request }) => {
-        return request.destination === 'style' || request.destination === 'document';
-    },
-    new StaleWhileRevalidate({
-        cacheName: 'my-cache',
-        plugins: [
-            new workbox.cacheableResponse.CacheableResponsePlugin({
-                statuses: [0, 200],
-            }),
-            new workbox.expiration.ExpirationPlugin({
-                maxEntries: 100,
-                maxAgeSeconds: 7 * 24 * 60 * 60,
-            }),
-        ],
-    })
-);
+  if (event.request.mode === "navigate") {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put("/", responseClone));
+          return response;
+        })
+        .catch(() => caches.match("/").then((cached) => cached || caches.match(OFFLINE_URL)))
+    );
+    return;
+  }
 
-workbox.routing.setCatchHandler(({ event }) => {
-    switch (event.request.destination) {
-        case 'document':
-            return caches.match('/404.html');
-        default:
-            return Response.error();
-    }
+  event.respondWith(
+    fetch(event.request)
+      .then((response) => {
+        if (!response || response.status !== 200 || response.type !== "basic") {
+          return response;
+        }
+
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+        return response;
+      })
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match(OFFLINE_URL)))
+  );
 });

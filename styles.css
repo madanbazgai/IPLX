@@ -5,162 +5,167 @@
     format("woff2");
 }
 
-body {
-  font-family: nothing;
-  background-color: rgb(39, 39, 39);
-  overflow: hidden; /* Hide scrollbars */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
+:root {
+  --bg-start: #191919;
+  --bg-end: #101010;
+  --panel: #1f1f1f;
+  --text: #f5f5f5;
+  --muted: #a6a6a6;
+  --brand: #18a72c;
+  --brand-strong: #0c7819;
+  --border: #2f2f2f;
+  --radius: 12px;
 }
 
-/* Hide webkit scrollbar */
-body::-webkit-scrollbar {
-  display: none;
+* {
+  box-sizing: border-box;
 }
-.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 90%;
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Nothing";
+  color: var(--text);
+  background: linear-gradient(180deg, var(--bg-start), var(--bg-end));
+}
+
+.page {
+  width: min(1300px, 94vw);
   margin: 0 auto;
-  border-bottom: 1px solid #3d3d3d;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 18px 0 22px;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
+
+.nav {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 14px;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding: 6px 0 16px;
+}
+
 .iplx {
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
   text-decoration: none;
+  color: var(--text);
+  font-size: clamp(1.5rem, 4vw, 1.9rem);
+  line-height: 1;
 }
 
 .div-links {
   display: flex;
-  font-size: 20px;
   justify-content: center;
-  gap: 2em;
-}
-.div-links a {
-  border-radius: 8px;
-  padding: 3px 10px;
-  border: 3px solid rgb(24, 153, 24);
-}
-.div-links a:hover {
-  background-color: rgb(1, 77, 1);
-  color: white;
-  border-radius: 8px;
-  padding: 3px 10px;
-  border: 3px solid rgb(24, 153, 24);
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
-.div-links a {
-  text-decoration: none;
-  color: rgb(248, 248, 248);
-  font-weight: 500;
+.channel-btn {
+  border: 2px solid var(--brand);
+  color: var(--text);
+  background: transparent;
+  border-radius: 10px;
+  padding: 8px 12px;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.channel-btn:hover,
+.channel-btn:focus-visible {
+  background: rgba(24, 167, 44, 0.25);
+}
+
+.channel-btn.is-active {
+  background: var(--brand-strong);
+  border-color: var(--brand-strong);
 }
 
 .install-btn {
-  background-color: rgb(24, 153, 24);
-  color: white;
-  padding: 5px 20px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-size: 20px;
-  font-family: nothing;
-  border: none;
-  outline: none;
+  background: var(--brand);
+  color: var(--text);
+  border: 0;
+  border-radius: 10px;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  font: inherit;
   cursor: pointer;
-  transition: all 0.3s ease;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.info {
-  z-index: 100;
-  position: absolute;
-  top: 11px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  color: #afafaf;
-  font-weight: 100;
-  width: 100%;
-  text-align: center;
+.install-icon {
+  display: block;
+}
+
+.install-btn:hover,
+.install-btn:focus-visible {
+  filter: brightness(1.06);
+  transform: translateY(-1px);
 }
 
 .container {
-  position: relative;
+  margin-top: 14px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+}
+
+.info,
+.stream-status {
+  margin: 0 0 8px;
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.stream-status {
+  color: #c8c8c8;
+}
+
+iframe {
   width: 100%;
-  margin: 0 auto;
-  overflow: hidden;
-  padding-top: 70%;
-  border-radius: 10px; /* 16:9 Aspect Ratio */
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 10px;
+  background: #000;
 }
 
 .footer {
   text-align: center;
-  color: white;
-  position: absolute;
-  top: 95%;
-  width: 100%;
-  font-size: 15px;
+  margin: auto 0 0;
+  padding-top: 14px;
+  color: var(--text);
+  font-size: 0.9rem;
 }
 
 .footer a {
-  margin-bottom: 20px;
-  color: white;
+  color: inherit;
 }
+
 .error {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
 }
+
 .not_found {
-  color: white;
-  font-size: 10rem;
-  font-weight: bold;
-}
-
-.player-container {
-  position: relative;
-  width: 100%;
-  height: 80vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE and Edge */
-}
-
-/* Hide webkit scrollbar for player container */
-.player-container::-webkit-scrollbar {
-  display: none;
-}
-
-.video-frame {
-  position: absolute;
-  width: 90%;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 255, 13, 0.5);
-  overflow: hidden; /* Ensure content doesn't show scrollbars */
-}
-
-iframe {
-  border-radius: 10px;
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translate(-50%);
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 87%;
-  border: none;
+  margin: 0;
+  font-size: clamp(4.5rem, 20vw, 9rem);
+  font-weight: 700;
 }
 
 .neon,
 .not_found {
-  animation: glowing 5000ms infinite;
+  animation: glowing 5s infinite;
 }
 
 @keyframes glowing {
@@ -168,83 +173,45 @@ iframe {
     color: #00ff0d;
   }
   50% {
-    text-shadow: 0 0 10px #23cf00, 0 0 10px #1fac03, 0 0 10px #23d300,
-      0 0 10px #23d400, 0 0 10px #22cc00, 0 0 10px #1fbb00, 0 0 10px #1eb400;
     color: #ffffff;
+    text-shadow: 0 0 10px #23cf00, 0 0 10px #1fac03, 0 0 10px #23d300;
   }
   100% {
     color: #00ff0d;
   }
 }
 
-@media screen and (max-width: 1377px) {
-  iframe {
-    height: 80%;
+@media (max-width: 740px) {
+  .nav {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo logo"
+      "links install";
+    align-items: stretch;
+    gap: 10px;
   }
-  .footer {
-    top: 88%;
-  }
-}
 
-@media screen and (max-width: 768px) {
   .iplx {
-    font-size: 25px;
-  }
-  .div-links {
-    font-size: 15px;
-  }
-  .div-links a {
-    padding: 2px 5px;
-  }
-  .install-btn {
-    font-size: 15px;
-    padding: 5px 10px;
-  }
-  .info {
-    display: none;
+    grid-area: logo;
+    justify-self: center;
   }
 
-  .player-container {
-    height: 80vh;
+  .div-links {
+    grid-area: links;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
   }
 
-  iframe {
-    height: 100%;
+  .channel-btn {
+    width: 100%;
+    text-align: center;
   }
-}
 
-@media screen and (max-width: 480px) {
-  .iplx {
-    font-size: 20px;
-  }
-  .div-links {
-    font-size: 12px;
-  }
-  .div-links a {
-    padding: 2px 5px;
-  }
   .install-btn {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-  .footer {
-    font-size: 12px;
-    top: 90%;
-  }
-}
-@media screen and (max-width: 360px) {
-  .iplx {
-    font-size: 15px;
-  }
-  .div-links {
-    font-size: 10px;
-    gap: 5px;
-  }
-  .div-links a {
-    padding: 2px 5px;
-  }
-  .install-btn {
-    font-size: 10px;
-    padding: 5px 10px;
+    grid-area: install;
+    align-self: stretch;
+    width: 42px;
   }
 }

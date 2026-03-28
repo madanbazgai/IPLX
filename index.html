@@ -6,65 +6,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-
     <title>IPLX</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <div class="nav">
-      <a class="iplx neon" href="/">IPLX</a>
-      <div class="div-links">
-        <a href="./channel-1.html">English HD</a>
-        <a href="./channel-2.html">Hindi HD</a>
-      </div>
-      <button class="install-btn">Install</button>
-    </div>
+    <main class="page">
+      <header class="nav">
+        <a class="iplx neon" href="/">IPLX</a>
+        <nav class="div-links" aria-label="Channel switcher">
+          <button class="channel-btn is-active" data-channel="english" type="button">
+            English HD
+          </button>
+          <button class="channel-btn" data-channel="hindi" type="button">Hindi HD</button>
+        </nav>
+        <button class="install-btn" type="button" hidden aria-label="Install app" title="Install app">
+          <svg
+            class="install-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            width="20"
+            height="20"
+            aria-hidden="true"
+          >
+            <path
+              fill="currentColor"
+              d="M12 3a1 1 0 0 1 1 1v8.59l2.3-2.3a1 1 0 1 1 1.4 1.42l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 1 1 1.4-1.42l2.3 2.3V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 1 1v1h12v-1a1 1 0 1 1 2 0v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1Z"
+            />
+          </svg>
+        </button>
+      </header>
 
-    <div id="container" class="container">
-      <p class="info">
-        Use brave browser for best experience. Report if links are not working.
+      <section class="container" aria-live="polite">
+        <p class="info">Best experience on modern browsers. Report if links stop working.</p>
+        <iframe
+          id="stream-frame"
+          title="IPLX live stream"
+          loading="eager"
+          allowfullscreen
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </section>
+
+      <p class="footer">
+        &copy; Designed & Developed by
+        <a class="underline" href="https://madanbajgai.com.np">MadanBazgai</a>
       </p>
-      <iframe src="./live-1.html" frameborder="0"></iframe>
-    </div>
-    <p class="footer">
-      &copy; Designed & Developed by
-      <a class="underline" href="https://madanbajgai.com.np">MadanBazgai</a>
-    </p>
+    </main>
 
     <script>
-      if (navigator && navigator.serviceWorker) {
-        navigator.serviceWorker.register("./sw.js");
+      const channels = {
+        english: "https://daddylive1.ru/live/stream-346.php",
+        hindi: "https://daddylive1.ru/live/stream-598.php",
+      };
+
+      const streamFrame = document.querySelector("#stream-frame");
+      const channelButtons = document.querySelectorAll(".channel-btn");
+      const installButton = document.querySelector(".install-btn");
+      let deferredPrompt;
+      let loadingTimeout;
+
+
+      function setActiveChannel(channel) {
+        channelButtons.forEach((button) => {
+          const isActive = button.dataset.channel === channel;
+          button.classList.toggle("is-active", isActive);
+          button.setAttribute("aria-pressed", String(isActive));
+        });
       }
 
-      let logo;
-      let deferredPrompt; // Declare the variable properly
+      function loadChannel(channel) {
+        clearTimeout(loadingTimeout);
+        setActiveChannel(channel);
+        setStatus("Loading stream...");
+        streamFrame.src = channels[channel];
 
-      window.addEventListener("load", function () {
-        logo = document.querySelector(".install-btn");
+        loadingTimeout = window.setTimeout(() => {
+          setStatus("If stream does not load, switch channel or refresh.");
+        }, 6000);
+      }
 
-        // Add the event listener here, outside the beforeinstallprompt event
-        logo.addEventListener("click", (e) => {
-          if (deferredPrompt) {
-            deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => {
-              if (choiceResult.outcome === "accepted") {
-                console.log("User accepted the A2HS prompt");
-              } else {
-                console.log("User dismissed the A2HS prompt");
-              }
-              deferredPrompt = null;
-            });
-          } else {
-            console.log("Installation prompt not available");
-          }
+      streamFrame.addEventListener("load", () => {
+        clearTimeout(loadingTimeout);
+        setStatus("Live now");
+      });
+
+      channelButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          loadChannel(button.dataset.channel);
         });
       });
 
-      window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        // Remove the event listener setup from here
+      if (navigator && navigator.serviceWorker) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {
+          setStatus("Offline features unavailable right now.");
+        });
+      }
+
+      window.addEventListener("beforeinstallprompt", (event) => {
+        event.preventDefault();
+        deferredPrompt = event;
+        installButton.hidden = false;
       });
+
+      installButton.addEventListener("click", async () => {
+        if (!deferredPrompt) {
+          return;
+        }
+
+        deferredPrompt.prompt();
+        await deferredPrompt.userChoice;
+        deferredPrompt = null;
+        installButton.hidden = true;
+      });
+
+      window.addEventListener("appinstalled", () => {
+        installButton.hidden = true;
+        deferredPrompt = null;
+      });
+
+      loadChannel("english");
     </script>
   </body>
 </html>

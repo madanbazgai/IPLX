@@ -1,7 +1,7 @@
 {
-  "name": "IPLX | Madan Bazgai",
-  "short_name": "IPLX | Madan Bazgai",
-  "description": "This is the website for streaming live ipl matches created by madan bazgai",
+  "name": "IPLX",
+  "short_name": "IPLX",
+  "description": "Live IPL stream links with quick channel switch.",
   "icons": [
     {
       "src": "/icons/icon-192x192.png",
@@ -26,10 +26,10 @@
       "purpose": "maskable"
     }
   ],
-  "theme_color": "#000",
-  "background_color": "#000",
+  "theme_color": "#191919",
+  "background_color": "#101010",
   "start_url": "/",
   "orientation": "any",
   "display": "standalone",
-  "prefer_related_applications": true
+  "prefer_related_applications": false
 }
