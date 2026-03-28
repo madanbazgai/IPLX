@@ -215,3 +215,63 @@ iframe {
     width: 42px;
   }
 }
+
+@media (orientation: landscape) and (max-height: 540px) {
+  .page {
+    padding: 10px 0 12px;
+  }
+
+  .nav {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "logo links install";
+    gap: 8px;
+    padding: 2px 0 10px;
+  }
+
+  .iplx {
+    justify-self: start;
+    font-size: 1.7rem;
+  }
+
+  .div-links {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .channel-btn {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+  }
+
+  .install-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .install-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .container {
+    margin-top: 8px;
+    padding: 8px;
+  }
+
+  .info,
+  .stream-status {
+    margin-bottom: 4px;
+    font-size: 0.78rem;
+  }
+
+  iframe {
+    aspect-ratio: auto;
+    height: min(46vw, calc(100dvh - 135px));
+  }
+
+  .footer {
+    padding-top: 8px;
+    font-size: 0.78rem;
+  }
+}
