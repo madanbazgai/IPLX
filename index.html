@@ -38,11 +38,13 @@
 
       <section class="container" aria-live="polite">
         <p class="info">Best experience on modern browsers. Report if links stop working.</p>
+        <p class="stream-status" id="stream-status">Ready</p>
         <iframe
           id="stream-frame"
           title="IPLX live stream"
           loading="eager"
           allowfullscreen
+          allow="autoplay; fullscreen; picture-in-picture"
           referrerpolicy="no-referrer"
         ></iframe>
       </section>
@@ -55,15 +57,24 @@
 
     <script>
       const channels = {
-        english: "https://daddylive1.ru/live/stream-346.php",
+        english: "https://www.rhinoarena.com/match-details/rcb-vs-srh?stream=4",
         hindi: "https://daddylive1.ru/live/stream-598.php",
       };
 
       const streamFrame = document.querySelector("#stream-frame");
+      const streamStatus = document.querySelector("#stream-status");
       const channelButtons = document.querySelectorAll(".channel-btn");
       const installButton = document.querySelector(".install-btn");
       let deferredPrompt;
       let loadingTimeout;
+
+      function setStatus(message) {
+        if (!streamStatus) {
+          return;
+        }
+
+        streamStatus.textContent = message;
+      }
 
 
       function setActiveChannel(channel) {
